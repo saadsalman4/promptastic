@@ -14,21 +14,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="container">
-          <header className="header">
-            <div className="header-content">
-              <h1 className="title">PrompTastic</h1>
-              <p className="subtitle">Smart AI Prompt Generator</p>
+        <div className="min-h-screen bg-gray-50">
+          <header className="bg-white shadow-sm">
+            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+              <h1 className="text-3xl font-bold text-gray-900">PrompTastic</h1>
+              <p className="text-gray-600">Smart AI Prompt Generator</p>
             </div>
           </header>
 
-          <main className="main-content">
+          <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             {children}
           </main>
 
-          <footer className="footer">
-            <div className="footer-content">
-              <p className="copyright">
+          <footer className="bg-white border-t border-gray-200">
+            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+              <p className="text-center text-sm text-gray-500">
                 &copy; {new Date().getFullYear()} PrompTastic. All rights reserved.
               </p>
             </div>
