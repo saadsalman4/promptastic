@@ -15,11 +15,7 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
   const lottieContainer = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // This will be used when you add your lottie JSON file
-    // For now, we'll just prepare the container
     if (isLoading && lottieContainer.current) {
-      // You'll replace this with your actual lottie animation
-      // Example usage when you have your file:
       const animation = lottie.loadAnimation({
         container: lottieContainer.current,
         renderer: 'svg',
