@@ -4,9 +4,11 @@ import React from 'react';
 
 interface PromptResultProps {
   prompt: string;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export default function PromptResult({ prompt }: PromptResultProps) {
+export default function PromptResult({ prompt, isOpen, onClose }: PromptResultProps) {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(prompt);
     alert('Prompt copied to clipboard!');
@@ -15,7 +17,7 @@ export default function PromptResult({ prompt }: PromptResultProps) {
   if (!prompt) return null;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg p-4">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Your Generated Prompt</h2>
         <button
