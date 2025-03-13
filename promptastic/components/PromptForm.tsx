@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { PromptFormData } from '../lib/gemini';
 import lottie from 'lottie-web';
@@ -10,9 +10,25 @@ interface PromptFormProps {
   isLoading: boolean;
 }
 
+// Define character limits for text fields
+const CHARACTER_LIMITS = {
+  orgName: 100,
+  botName: 50,
+  audience: 200,
+  topicExpertise: 200,
+  specificInstructions: 500,
+  exampleScenarios: 800,
+  avoidTopics: 300
+};
+
 export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
-  const { register, handleSubmit, formState: { errors } } = useForm<PromptFormData>();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm<PromptFormData>();
   const lottieContainer = useRef<HTMLDivElement>(null);
+  
+  // Track character counts for textarea fields
+  const specificInstructionsValue = watch("specificInstructions") || "";
+  const exampleScenariosValue = watch("exampleScenarios") || "";
+  const avoidTopicsValue = watch("avoidTopics") || "";
   
   useEffect(() => {
     if (isLoading && lottieContainer.current) {
@@ -71,7 +87,14 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
                 type="text"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="e.g., Acme Inc."
-                {...register("orgName", { required: "Organization name is required" })}
+                maxLength={CHARACTER_LIMITS.orgName}
+                {...register("orgName", { 
+                  required: "Organization name is required",
+                  maxLength: {
+                    value: CHARACTER_LIMITS.orgName,
+                    message: `Maximum ${CHARACTER_LIMITS.orgName} characters allowed`
+                  }
+                })}
               />
               {errors.orgName && <p className="mt-1 text-sm text-red-600">{errors.orgName.message}</p>}
             </div>
@@ -87,8 +110,15 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
                 type="text"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="e.g., AcmeBot"
-                {...register("botName")}
+                maxLength={CHARACTER_LIMITS.botName}
+                {...register("botName", {
+                  maxLength: {
+                    value: CHARACTER_LIMITS.botName,
+                    message: `Maximum ${CHARACTER_LIMITS.botName} characters allowed`
+                  }
+                })}
               />
+              {errors.botName && <p className="mt-1 text-sm text-red-600">{errors.botName.message}</p>}
             </div>
 
             <div className="mb-4 md:mb-0">
@@ -124,7 +154,14 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
                 type="text"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="e.g., Technical professionals, Students, General public"
-                {...register("audience", { required: "Target audience is required" })}
+                maxLength={CHARACTER_LIMITS.audience}
+                {...register("audience", { 
+                  required: "Target audience is required",
+                  maxLength: {
+                    value: CHARACTER_LIMITS.audience,
+                    message: `Maximum ${CHARACTER_LIMITS.audience} characters allowed`
+                  }
+                })}
               />
               {errors.audience && <p className="mt-1 text-sm text-red-600">{errors.audience.message}</p>}
             </div>
@@ -138,8 +175,15 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
                 type="text"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="e.g., Marketing, Software Development, Healthcare"
-                {...register("topicExpertise")}
+                maxLength={CHARACTER_LIMITS.topicExpertise}
+                {...register("topicExpertise", {
+                  maxLength: {
+                    value: CHARACTER_LIMITS.topicExpertise,
+                    message: `Maximum ${CHARACTER_LIMITS.topicExpertise} characters allowed`
+                  }
+                })}
               />
+              {errors.topicExpertise && <p className="mt-1 text-sm text-red-600">{errors.topicExpertise.message}</p>}
             </div>
           </div>
 
@@ -171,8 +215,20 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g., Always provide 3 examples, Include references, Follow step-by-step format"
-              {...register("specificInstructions")}
+              maxLength={CHARACTER_LIMITS.specificInstructions}
+              {...register("specificInstructions", {
+                maxLength: {
+                  value: CHARACTER_LIMITS.specificInstructions,
+                  message: `Maximum ${CHARACTER_LIMITS.specificInstructions} characters allowed`
+                }
+              })}
             ></textarea>
+            <div className="mt-1 text-sm text-gray-500 flex justify-end">
+              {specificInstructionsValue.length}/{CHARACTER_LIMITS.specificInstructions}
+            </div>
+            {errors.specificInstructions && (
+              <p className="mt-1 text-sm text-red-600">{errors.specificInstructions.message}</p>
+            )}
           </div>
 
           <div>
@@ -184,8 +240,20 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Describe example scenarios or questions your AI might encounter"
-              {...register("exampleScenarios")}
+              maxLength={CHARACTER_LIMITS.exampleScenarios}
+              {...register("exampleScenarios", {
+                maxLength: {
+                  value: CHARACTER_LIMITS.exampleScenarios,
+                  message: `Maximum ${CHARACTER_LIMITS.exampleScenarios} characters allowed`
+                }
+              })}
             ></textarea>
+            <div className="mt-1 text-sm text-gray-500 flex justify-end">
+              {exampleScenariosValue.length}/{CHARACTER_LIMITS.exampleScenarios}
+            </div>
+            {errors.exampleScenarios && (
+              <p className="mt-1 text-sm text-red-600">{errors.exampleScenarios.message}</p>
+            )}
           </div>
 
           <div>
@@ -197,8 +265,20 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
               rows={2}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g., Political opinions, Medical advice, Competitor products"
-              {...register("avoidTopics")}
+              maxLength={CHARACTER_LIMITS.avoidTopics}
+              {...register("avoidTopics", {
+                maxLength: {
+                  value: CHARACTER_LIMITS.avoidTopics,
+                  message: `Maximum ${CHARACTER_LIMITS.avoidTopics} characters allowed`
+                }
+              })}
             ></textarea>
+            <div className="mt-1 text-sm text-gray-500 flex justify-end">
+              {avoidTopicsValue.length}/{CHARACTER_LIMITS.avoidTopics}
+            </div>
+            {errors.avoidTopics && (
+              <p className="mt-1 text-sm text-red-600">{errors.avoidTopics.message}</p>
+            )}
           </div>
 
           <div>
