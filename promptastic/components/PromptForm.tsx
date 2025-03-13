@@ -30,7 +30,7 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-semibold mb-4">Generate Your AI Prompt</h2>
+      <h2 className="text-xl font-semibold mb-4">Generate Your AI System Prompt</h2>
       
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-12">

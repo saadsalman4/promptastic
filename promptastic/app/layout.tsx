@@ -18,7 +18,7 @@ export default function RootLayout({
           <header className="bg-white shadow-sm">
             <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
               <h1 className="text-3xl font-bold text-gray-900">promptastic</h1>
-              <p className="mt-2 text-gray-600">Your One-Stop Solution for AI Prompting</p>
+              <p className="mt-2 text-gray-600">Your One-Stop Solution for AI System Prompting</p>
             </div>
           </header>
 
