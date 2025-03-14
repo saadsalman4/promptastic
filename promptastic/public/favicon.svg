@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="#4a6bef"/>
+  
+  <!-- Letter P stylized -->
+  <path d="M20 16h12c4.418 0 8 3.582 8 8s-3.582 8-8 8h-4v12h-8V16z" fill="#ffffff"/>
+  
+  <!-- Cut out from P to make it look like a speech bubble -->
+  <path d="M28 24h4c1.105 0 2 0.895 2 2s-0.895 2-2 2h-4v-4z" fill="#4a6bef"/>
+  
+  <!-- Sparkle effect around the P -->
+  <path d="M46 20l3-3 3 3-3 3z" fill="#ffdd55"/>
+  <path d="M50 38l2-2 2 2-2 2z" fill="#ffdd55"/>
+  <path d="M14 30l2-2 2 2-2 2z" fill="#ffdd55"/>
+  
+  <!-- Prompt cursor -->
+  <rect x="32" y="40" width="4" height="10" fill="#ffffff">
+    <animate attributeName="opacity" values="1;0;1" dur="1.5s" repeatCount="indefinite" />
+  </rect>
+</svg>
